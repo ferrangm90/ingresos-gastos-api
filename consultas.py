@@ -54,12 +54,18 @@ def mostrar_ingresos():
     conexionIngreso = Conexion('SELECT sum(quantity) FROM movimiento WHERE quantity>0;')
     respuesta = conexionIngreso.res.fetchone()
     conexionIngreso.con.close()
-    valor = respuesta[0] if respuesta and respuesta[0] is not None else 0
+    if respuesta and respuesta[0] is not None:
+        valor = respuesta[0]
+    else:
+        valor = 0
     return str(valor)
 
 def mostrar_gastos():
     conexionGasto = Conexion('SELECT sum(quantity) FROM movimiento WHERE quantity<0;')
     respuesta = conexionGasto.res.fetchone()
     conexionGasto.con.close()
-    valor = respuesta[0] if respuesta and respuesta[0] is not None else 0
+    if respuesta and respuesta[0] is not None:
+        valor = respuesta[0]
+    else:
+        valor = 0
     return str(valor)

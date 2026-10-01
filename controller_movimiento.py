@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from consultas import *
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # Permite cualquier origen (dominio)
+    allow_credentials=False,  # ¡ATENCIÓN! Debe ser False si usas "*" en origins
+    allow_methods=["*"],      # Permite todos los métodos HTTP (GET, POST, PUT, etc.)
+    allow_headers=["*"],      # Permite todas las cabeceras HTTP
+)
 
 class ModelMovimiento(BaseModel):
     date:str
@@ -52,3 +61,5 @@ def movimiento_borrado(id:int):
     except Exception as ex:
         print(ex)
         return {'error':'ha fallado el borrado'} 
+
+ 
